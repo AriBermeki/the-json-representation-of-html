@@ -1,5 +1,4 @@
 import uuid
-import json
 
 class Element:
     """The base class of all page elements"""
@@ -16,7 +15,7 @@ class Element:
         self.content = content
 
         # Hinzufügen des aktuellen Objekts zur Liste aller Elemente
-        
+        Element.all_elements.append(self.as_dict())
 
     def __enter__(self):
         return self
@@ -26,4 +25,3 @@ class Element:
 
     def as_dict(self):
         return {x: self.__dict__[x] for x in self.__dict__ if self.__dict__[x] is not None}
-
