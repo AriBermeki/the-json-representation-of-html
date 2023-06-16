@@ -1,0 +1,151 @@
+// const True = true;
+        // const False = false;
+        // const None = null | undefined;
+        // //const element = {{ elements | safe }};
+     
+        // function logEvent(eventType, event) {
+        //     var message = { event_: {} };
+            
+        //     switch (eventType) {
+        //         // Mouse Events
+        //         case 'click':
+        //         case 'contextmenu':
+        //         case 'dblclick':
+        //         case 'drag':
+        //         case 'dragend':
+        //         case 'dragenter':
+        //         case 'dragexit':
+        //         case 'dragleave':
+        //         case 'dragover':
+        //         case 'dragstart':
+        //         case 'drop':
+        //         case 'mousedown':
+        //         case 'mouseenter':
+        //         case 'mouseleave':
+        //         case 'mousemove':
+        //         case 'mouseout':
+        //         case 'mouseover':
+        //         case 'mouseup':
+        //         message.event_.target = event.target;
+        //         message.event_.clientX = event.clientX;
+        //         message.event_.clientY = event.clientY;
+        //         message.event_.pageX = event.pageX;
+        //         message.event_.pageY = event.pageY;
+        //         message.event_.button = event.button;
+        //         break;
+
+        //         // Keyboard Events
+        //         case 'keydown':
+        //         case 'keypress':
+        //         case 'keyup':
+        //         message.event_.key = event.key;
+        //         message.event_.keyCode = event.keyCode;
+        //         break;
+
+        //         // Form Events
+        //         case 'change':
+        //         case 'input':
+        //         case 'submit':
+        //         message.event_.target = event.target;
+        //         message.event_.value = event.target.value;
+        //         break;
+
+        //         // Touch Events
+        //         case 'touchcancel':
+        //         case 'touchend':
+        //         case 'touchmove':
+        //         case 'touchstart':
+        //         message.event_.touches = event.touches;
+        //         message.event_.changedTouches = event.changedTouches;
+        //         break;
+
+        //         // Focus Events
+        //         case 'focus':
+        //         case 'blur':
+        //         message.event_.target = event.target;
+        //         break;
+
+        //         // Other Events
+        //         case 'scroll':
+        //         case 'load':
+        //         case 'error':
+        //         // No additional properties needed for these events
+        //         break;
+        //         default:
+        //         console.log('Unrecognized event type: ' + eventType);
+        //         return;
+        //     }
+            
+        //     console.log('Event type: ' + eventType);
+        //     console.log('Event data:', message.event_);
+        // }
+        // function createHTMLElementFromJSON(jsonElement) {
+        //     const obj = JSON.parse(JSON.stringify(jsonElement)); // Create a deep copy of the input object
+        //     const props = {};
+
+        //     // Remove properties starting with ":" and store their values in props
+        //     Object.entries(obj).forEach(([key, value]) => {
+        //         if (key.startsWith(':')) {
+        //         props[key.substring(1)] = value;
+        //         delete obj[key];
+        //         }
+        //     });
+
+        //     const element = document.createElement(obj.tag);
+
+        //     // Set properties
+        //     if (obj.properties) {
+        //         for (const property in obj.properties) {
+        //         element[property] = obj.properties[property];
+        //         }
+        //     }
+
+        //     // Set attributes
+        //     if (obj.attributes) {
+        //         for (const attribute in obj.attributes) {
+        //         element.setAttribute(attribute, obj.attributes[attribute]);
+        //         }
+        //     }
+
+        //     // Add event listener
+        //     if (obj.eventListeners) {
+        //         const eventType = obj.eventListeners.eventType;
+        //         const eventArgs = obj.eventListeners.eventArgs;
+        //         const elementId = obj.eventListeners.elementId;
+        //         const callbackUuid = obj.eventListeners.callbackUuid;
+        //         const sendToServer = obj.eventListeners.sendToServer;
+
+        //         if (eventType && eventArgs) {
+        //         element.addEventListener(eventType, function(event) {
+        //             if (sendToServer && callbackUuid) {
+        //             const target_element = document.getElementById(obj.properties.id);
+        //             const system = target_element + `.${eventArgs}`;
+        //             console.log("Der callback_uuid lautet: ", callbackUuid);
+        //             // Code to send data to the server
+        //             }
+        //             eval(eventArgs);
+        //             //logEvent(eventType, event);
+        //         });
+        //         }
+        //     }
+
+        //     // Set content
+        //     if (obj.content) {
+        //         if (typeof obj.content === 'string') {
+        //         element.innerText = obj.content;
+        //         } else {
+        //         const contentElement = createHTMLElementFromJSON(obj.content);
+        //         element.appendChild(contentElement);
+        //         }
+        //     }
+
+        //     return element;
+        // }
+
+        
+
+        // const app = document.getElementById('root');
+        // const myElement = createHTMLElementFromJSON(js);
+        // app.appendChild(myElement);
+       
+        

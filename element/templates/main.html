@@ -1,0 +1,65 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Socket.IO Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Socket.IO Example</h1>
+    <div id="messages"></div>
+    <input type="text" id="input" placeholder="Enter a message" />
+    <button id="sendButton">Send</button>
+    <div id="popup">
+        <span>Connection lost.</span>
+        <span>Trying to reconnect...</span>
+    </div>
+
+    <script>
+        const url = window.location.protocol === 'https:' ? 'wss://' : 'ws://' + window.location.host;
+        const extraHeaders = {{ socket_io_js_extra_headers | safe }};
+        const transports = ['websocket', 'polling'];
+        const query = { client_id: "{{ client_id }}" };
+        window.path_prefix = "{{ prefix | safe }}";
+        window.socket = io(url, { path: "{{ prefix | safe }}/_myapp_ws/socket.io", query, extraHeaders, transports });
+
+        window.socket.on("connect", () => {
+            window.socket.emit("handshake", (ok) => {
+                if (!ok) window.location.reload();
+                    document.getElementById('popup').style.opacity = 0;
+                });
+        });
+        window.socket.on("connect_error", (err) => {
+            if (err.message == 'timeout') window.location.reload(); // see https://github.com/zauberzeug/nicegui/issues/198
+        });
+        window.socket.on("disconnect", () => {
+            document.getElementById('popup').style.opacity = 1;
+        });
+
+
+        window.socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+
+        window.socket.on('message', (data) => {
+            const messages = document.getElementById('messages');
+            const messageElement = document.createElement('div');
+            messageElement.innerText = `${data.author}: ${data.text}`;
+            messages.appendChild(messageElement);
+        });
+
+        window.socket.on('disconnect', () => {
+            console.log('Disconnected from server');
+        });
+
+        document.getElementById('sendButton').addEventListener('click', () => {
+            const input = document.getElementById('input');
+            const message = input.value;
+            input.value = '';
+
+            window.socket.emit('msseagesys', { text: message, author: 'Client' });
+        });
+    </script>
+</body>
+</html>
