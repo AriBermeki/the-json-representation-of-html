@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <input id="input" type="text" placeholder="Enter">
+    <button id="click">Click</button>
+    <script>
+        const button = document.getElementById('click');
+        button.addEventListener('click', function(){
+
+            const erste_element = 'value';
+            const zweite_element = 'innerText';
+            const element1 = document.getElementById('input')[erste_element];
+            const element2 = document.getElementById('root');
+            element2[zweite_element] = element1;
+            console.log(element2);
+
+        });
+    </script>
+</body>
+</html>

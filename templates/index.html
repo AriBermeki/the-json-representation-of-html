@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <meta name="viewport" content="{{ viewport }}" />
+    <script src="{{ prefix | safe }}/static/js/socket.io.min.js"></script>
+    <link href="{{ favicon }}" rel="shortcut icon" />
+    <link href="{{ prefix | safe }}/static/style.css" rel="stylesheet" type="text/css" />
+    <link href="{{ prefix | safe }}/static/fonts.css" rel="stylesheet" type="text/css" />
+    {% if tailwind %}
+    <script src="{{ prefix | safe }}/static/js/tailwindcss.min.js"></script>
+    {% endif %} 
+
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="popup">
+      <span>Connection lost.</span>
+      <span>Trying to reconnect...</span>
+    </div>
+    <script type="module">
+        const jsonElement = {{ elements | safe }};
+        //const obj = JSON.stringify(jsonElement)
+
+        const query = { client_id: "{{ client_id }}" };
+        const url = window.location.protocol === 'https:' ? 'wss://' : 'ws://' + window.location.host;
+        const extraHeaders = {{ socket_io_js_extra_headers | safe }};
+        const transports = ['websocket', 'polling'];
+        window.path_prefix = "{{ prefix | safe }}";
+        window.socket = io(url, { path: "{{ prefix | safe }}/_hybrid_ws/socket.io", query, extraHeaders, transports });
+
+        window.socket.on("connect", () => {
+        window.socket.emit("handshake", (ok) => {
+            if (!ok) window.location.reload();
+            document.getElementById('popup').style.opacity = 0;
+        });
+        });
+
+        window.socket.on("connect_error", (err) => {
+        if (err.message === 'timeout') window.location.reload();
+        });
+
+        window.socket.on("disconnect", () => {
+        document.getElementById('popup').style.opacity = 1;
+        });
+
+
+
+        function createHTMLFromJSON(json) {
+            const element = document.createElement(Object.keys(json)[0]);
+
+            const attributes = json[Object.keys(json)[0]].attributes;
+            if (attributes) {
+                for (const key in attributes) {
+                if (key === 'style') {
+                    const styleObj = attributes[key];
+                    for (const styleKey in styleObj) {
+                    element.style[styleKey] = styleObj[styleKey];
+                    }
+                } else {
+                    element.setAttribute(key, attributes[key]);
+                }
+                }
+            }
+
+            const content = json[Object.keys(json)[0]].content;
+            if (Array.isArray(content)) {
+                content.forEach(item => {
+                const childElement = createHTMLFromJSON(item);
+                element.appendChild(childElement);
+                });
+            } else if (typeof content === 'string') {
+                element.textContent = content;
+            }
+
+            return element;
+        }
+
+        
+
+        const app = document.getElementById('app');
+        const htmlElement = createHTMLFromJSON(jsonElement);
+        app.appendChild(htmlElement);
+
+
+
+
+ 
+
+
+
+
+    </script>
+</body>
+</html>
